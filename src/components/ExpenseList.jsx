@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/new sagar bakery.ico";
+import logo from "../assets/logo.ico";
 
 const ExpenseList = () => {
   const [expenses, setExpenses] = useState([]);
