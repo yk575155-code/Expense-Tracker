@@ -4,51 +4,59 @@ import logo from "../assets/logo.ico";
 
 const ExpenseList = () => {
   const [expenses, setExpenses] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
+  const [formData, setFormData] = useState({
+    item: "",
+    company: "",
+    price: "",
+    date: "",
+  });
 
   useEffect(() => {
-    const storedExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
-    setExpenses(storedExpenses);
+    const data = JSON.parse(localStorage.getItem("expenses")) || [];
+    setExpenses(data.reverse());
   }, []);
 
   const handleDelete = (index) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this expense?");
-    if (!confirmDelete) return;
+    if (!window.confirm("Delete this expense?")) return;
 
-    const updatedExpenses = expenses.filter((_, i) => i !== index);
-    setExpenses(updatedExpenses);
-    localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
+    const updated = expenses.filter((_, i) => i !== index);
+    setExpenses(updated);
+    localStorage.setItem("expenses", JSON.stringify(updated));
   };
 
+  // OPEN MODAL
   const handleEdit = (index) => {
-    const expense = expenses[index];
+    const e = expenses[index];
+    setFormData(e);
+    setEditIndex(index);
+  };
 
-    const item = prompt("Edit Item:", expense.item);
-    const company = prompt("Edit Company:", expense.company);
-    const price = prompt("Edit Amount:", expense.price);
-    const date = prompt("Edit Date:", expense.date);
+  // INPUT CHANGE
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    if (!item || !company || !price || !date) return;
+  // SAVE EDIT
+  const handleSave = () => {
+    const updated = [...expenses];
+    updated[editIndex] = formData;
 
-    const updatedExpenses = [...expenses];
-    updatedExpenses[index] = { item, company, price, date };
+    setExpenses(updated);
+    localStorage.setItem("expenses", JSON.stringify(updated));
 
-    setExpenses(updatedExpenses);
-    localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
+    setEditIndex(null);
   };
 
   return (
     <>
       <header>
         <nav>
-          <Link to="/">
-            <i className="bi bi-arrow-left"></i>
-          </Link>
+          <Link to="/">←</Link>
 
           <div className="logo">
-            <Link to="/">
-              <img src={logo} alt="logo" />
-            </Link>
-            <h1>Bakery Daily Expense</h1>
+            <img src={logo} alt="logo" />
+            <h1>Expense Tracker</h1>
           </div>
 
           <Link to="/">Home</Link>
@@ -56,13 +64,13 @@ const ExpenseList = () => {
       </header>
 
       <main>
-        <h1>Daily List Reorder</h1>
+        <h1>Daily List</h1>
 
         <table>
           <thead>
             <tr>
               <th>Item</th>
-              <th>Company Name</th>
+              <th>Company</th>
               <th>Amount</th>
               <th>Date</th>
               <th>Actions</th>
@@ -70,29 +78,70 @@ const ExpenseList = () => {
           </thead>
 
           <tbody>
-            {expenses.length === 0 ? (
-              <tr>
-                <td colSpan="5" style={{ textAlign: "center" }}>
-                  No expenses added yet
+            {expenses.map((e, index) => (
+              <tr key={index} className="expense-row">
+                <td data-label="Item">{e.item}</td>
+                <td data-label="Company">{e.company}</td>
+                <td data-label="Amount">₹{e.price}</td>
+                <td data-label="Date">{e.date}</td>
+
+                <td className="actions">
+                  <button onClick={() => handleEdit(index)}>
+                    <i className="bi bi-pencil-square"></i>
+                  </button>
+
+                  <button onClick={() => handleDelete(index)}>
+                    <i className="bi bi-trash"></i>
+                  </button>
                 </td>
               </tr>
-            ) : (
-              expenses.map((expense, index) => (
-                <tr key={index}>
-                  <td>{expense.item}</td>
-                  <td>{expense.company}</td>
-                  <td>₹{expense.price}</td>
-                  <td>{expense.date}</td>
-
-                  <td>
-                    <button onClick={() => handleEdit(index)}>Edit</button>
-                    <button onClick={() => handleDelete(index)}>Delete</button>
-                  </td>
-                </tr>
-              ))
-            )}
+            ))}
           </tbody>
         </table>
+
+        {/* MODAL */}
+        {editIndex !== null && (
+          <div className="modal">
+            <div className="modal-box">
+              <h2>Edit Expense</h2>
+
+              <input
+                name="item"
+                value={formData.item}
+                onChange={handleChange}
+                placeholder="Item"
+              />
+
+              <input
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                placeholder="Company"
+              />
+
+              <input
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                placeholder="Amount"
+              />
+
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+              />
+
+              <div className="modal-actions">
+                <button onClick={handleSave}>Save</button>
+                <button onClick={() => setEditIndex(null)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </>
   );

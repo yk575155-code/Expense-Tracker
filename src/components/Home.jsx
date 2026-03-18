@@ -71,6 +71,7 @@ const Home = () => {
             <input
               type="text"
               value={item}
+              placeholder="Enter item name"
               onChange={(e) => setItem(e.target.value)}
               required
             />
@@ -80,8 +81,8 @@ const Home = () => {
             <input
               type="text"
               value={company}
+              placeholder="Enter company name"
               onChange={(e) => setCompany(e.target.value)}
-              required
             />
 
             <label>Amount:</label>
@@ -89,6 +90,7 @@ const Home = () => {
             <input
               type="number"
               value={amount}
+              placeholder="Enter amount"
               onChange={(e) => setAmount(e.target.value)}
               required
             />
@@ -98,6 +100,7 @@ const Home = () => {
             <input
               type="date"
               value={date}
+              placeholder="Enter date"
               onChange={(e) => setDate(e.target.value)}
               required
             />
