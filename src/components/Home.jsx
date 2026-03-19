@@ -47,7 +47,7 @@ const Home = () => {
             <h1>Bakery Daily Expense</h1>
           </div>
 
-          <Link to="/list">Show List</Link>
+          <Link to="/ExpenseList">Show List</Link>
         </nav>
       </header>
 
