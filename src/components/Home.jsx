@@ -2,9 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.ico";
 
-
 const Home = () => {
-
   const [item, setItem] = useState("");
   const [company, setCompany] = useState("");
   const [amount, setAmount] = useState("");
@@ -17,18 +15,14 @@ const Home = () => {
       item: item,
       company: company,
       price: amount,
-      date: date
+      date: date,
     };
 
-    const existingExpenses =
-      JSON.parse(localStorage.getItem("expenses")) || [];
+    const existingExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
     existingExpenses.push(expense);
 
-    localStorage.setItem(
-      "expenses",
-      JSON.stringify(existingExpenses)
-    );
+    localStorage.setItem("expenses", JSON.stringify(existingExpenses));
 
     setItem("");
     setCompany("");
@@ -47,7 +41,7 @@ const Home = () => {
             <h1>Bakery Daily Expense</h1>
           </div>
 
-          <Link to="/ExpenseList">Show List</Link>
+          <Link to="/expenses">Show List</Link>
         </nav>
       </header>
 
