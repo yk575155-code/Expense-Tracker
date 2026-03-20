@@ -4,15 +4,10 @@ import ExpenseList from "./components/ExpenseList";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-
-        <Route path="/" element={<Home />} />
-
-        <Route path="/ExpenseList" element={<ExpenseList />} />
-
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/ExpenseList" element={<ExpenseList />} />
+    </Routes>
   );
 }
 
