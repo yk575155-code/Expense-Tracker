@@ -78,24 +78,25 @@ const ExpenseList = () => {
           </thead>
 
           <tbody>
-            {expenses.map((e, index) => (
-              <tr key={index} className="expense-row">
-                <td data-label="Item">{e.item}</td>
-                <td data-label="Company">{e.company}</td>
-                <td data-label="Amount">₹{e.price}</td>
-                <td data-label="Date">{e.date}</td>
+            {expenses &&
+              expenses.map((e, index) => (
+                <tr key={index} className="expense-row">
+                  <td data-label="Item">{e.item}</td>
+                  <td data-label="Company">{e.company}</td>
+                  <td data-label="Amount">₹{e.price}</td>
+                  <td data-label="Date">{e.date}</td>
 
-                <td className="actions">
-                  <button onClick={() => handleEdit(index)}>
-                    <i className="bi bi-pencil-square"></i>
-                  </button>
+                  <td className="actions">
+                    <button onClick={() => handleEdit(index)}>
+                      <i className="bi bi-pencil-square"></i>
+                    </button>
 
-                  <button onClick={() => handleDelete(index)}>
-                    <i className="bi bi-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            ))}
+                    <button onClick={() => handleDelete(index)}>
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
@@ -135,9 +136,7 @@ const ExpenseList = () => {
 
               <div className="modal-actions">
                 <button onClick={handleSave}>Save</button>
-                <button onClick={() => setEditIndex(null)}>
-                  Cancel
-                </button>
+                <button onClick={() => setEditIndex(null)}>Cancel</button>
               </div>
             </div>
           </div>
