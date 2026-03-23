@@ -101,7 +101,8 @@ const ExpenseList = () => {
     const search = input.toLowerCase();
     return (
       e.item.toLowerCase().includes(search) ||
-      e.company.toLowerCase().includes(search)
+      e.company.toLowerCase().includes(search) ||
+      e.date.toLowerCase().includes(search) 
     );
   });
 
