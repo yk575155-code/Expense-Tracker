@@ -45,7 +45,6 @@ const ExpenseList = () => {
   // ✅ OPEN EDIT MODAL (using ID)
   const handleEdit = (id) => {
     const selected = expenses.find((e) => e.id === id);
-
     setFormData(selected); // fill form with data
     setEditId(id); // store ID
   };
@@ -77,7 +76,7 @@ const ExpenseList = () => {
             id: editId, // keep same ID
             price: Number(formData.price), // ensure number
           }
-        : e
+        : e,
     );
 
     setExpenses(updated);
@@ -94,8 +93,20 @@ const ExpenseList = () => {
   };
 
   // ✅ TOTAL CALCULATION (safe)
-  const getTotal = () => {
-    return expenses.reduce((total, item) => {
+ 
+
+  const [input, setInput] = useState("");
+
+  const filteredExpenses = expenses.filter((e) => {
+    const search = input.toLowerCase();
+    return (
+      e.item.toLowerCase().includes(search) ||
+      e.company.toLowerCase().includes(search)
+    );
+  });
+
+   const getTotal = () => {
+    return filteredExpenses.reduce((total, item) => {
       return total + (Number(item.price) || 0);
     }, 0);
   };
@@ -117,7 +128,11 @@ const ExpenseList = () => {
 
       <main>
         <h1>Daily List</h1>
-
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
         {/* ✅ EMPTY STATE */}
         {expenses.length === 0 ? (
           <p style={{ marginTop: "20px" }}>No expenses found.</p>
@@ -134,7 +149,7 @@ const ExpenseList = () => {
             </thead>
 
             <tbody>
-              {expenses.map((e) => (
+              {filteredExpenses.map((e) => (
                 <tr key={e.id} className="expense-row">
                   <td data-label="Item">{e.item}</td>
                   <td data-label="Company">{e.company}</td>

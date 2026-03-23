@@ -34,8 +34,7 @@ const Home = () => {
     // ✅ SAFE READ from localStorage
     let existingExpenses = [];
     try {
-      existingExpenses =
-        JSON.parse(localStorage.getItem("expenses")) || [];
+      existingExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
     } catch (error) {
       // ✅ if data is corrupted, reset
       existingExpenses = [];
@@ -52,7 +51,7 @@ const Home = () => {
     setCompany("");
     setAmount("");
     setDate("");
-
+    document.querySelector("input").focus();
     // ✅ SUCCESS message
     alert("Expense Added!");
   };
@@ -87,7 +86,6 @@ const Home = () => {
 
           {/* ✅ Form submit handler */}
           <form onSubmit={handleSubmit}>
-            
             <label>Enter Item:</label>
             <input
               type="text"
