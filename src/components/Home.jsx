@@ -67,6 +67,7 @@ const Home = () => {
 
           {/* ✅ Navigate to list page */}
           <Link to="/expenses">Show List</Link>
+          <Link to="/about">About</Link>
         </nav>
       </header>
 
