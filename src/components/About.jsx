@@ -1,6 +1,6 @@
 import React from "react";
 import "./About.css";
-import logo from "../assets/logo.ico";
+import logo from "../assets/new.png";
 import yusufImage from "../assets/img_2.jpg";
 import CV from "../assets/yusuf-RESUME.pdf";
 import { Link } from "react-router-dom";

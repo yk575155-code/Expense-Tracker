@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.ico";
+import logo from "../assets/new.png";
 
 const ExpenseList = () => {
   // ✅ store all expenses
